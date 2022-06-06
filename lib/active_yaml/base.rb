@@ -19,7 +19,8 @@ module ActiveYaml
 
       private
       def load_path(path)
-        YAML.load(ERB.new(File.read(path)).result)
+        yaml_config = ERB.new(File.read(path)).result
+        YAML.respond_to?(:unsafe_load) ? YAML.unsafe_load(yaml_config) : YAML.load(yaml_config)
       end
     end
   end
